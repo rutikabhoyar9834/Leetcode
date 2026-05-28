@@ -1,0 +1,16 @@
+class Solution(object):
+    def largestNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: str
+        """
+        nums = [str(i) for i in nums]
+        def fun(a, b):
+            if a + b > b + a:
+                return -1
+            return 1
+        nums.sort(key=cmp_to_key(fun))
+        ans = "".join(nums)
+        if ans[0] == "0":
+            return "0"
+        return ans

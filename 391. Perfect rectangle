@@ -1,0 +1,29 @@
+class Solution(object):
+    def isRectangleCover(self, rectangles):
+        """
+        :type rectangles: List[List[int]]
+        :rtype: bool
+        """
+        area = 0
+        points = set()
+        minx = miny = float('inf')
+        maxx = maxy = float('-inf')
+        for x1, y1, x2, y2 in rectangles:
+            area += (x2 - x1) * (y2 - y1)
+            minx = min(minx, x1)
+            miny = min(miny, y1)
+            maxx = max(maxx, x2)
+            maxy = max(maxy, y2)
+            for p in [(x1,y1),(x1,y2),(x2,y1),(x2,y2)]:
+                if p in points:
+                    points.remove(p)
+                else:
+                    points.add(p)
+        if area != (maxx - minx) * (maxy - miny):
+            return False
+        return points == {
+            (minx, miny),
+            (minx, maxy),
+            (maxx, miny),
+            (maxx, maxy)
+        }

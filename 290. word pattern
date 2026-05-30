@@ -1,0 +1,18 @@
+class Solution(object):
+    def wordPattern(self, pattern, s):
+        """
+        :type pattern: str
+        :type s: str
+        :rtype: bool
+        """
+        words = s.split()
+        if len(pattern) != len(words):
+            return False
+        d = {}
+        for p, w in zip(pattern, words):
+            if p in d:
+                if d[p] != w:
+                    return False
+            else:
+                d[p] = w
+        return len(set(pattern)) == len(set(words)) == len(set(d.values()))

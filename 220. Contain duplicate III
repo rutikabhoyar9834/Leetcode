@@ -1,0 +1,25 @@
+class Solution(object):
+    def containsNearbyAlmostDuplicate(self, nums, indexDiff, valueDiff):
+        """
+        :type nums: List[int]
+        :type indexDiff: int
+        :type valueDiff: int
+        :rtype: bool
+        """
+        if valueDiff < 0:
+            return False
+        bucket = {}
+        w = valueDiff + 1
+        for i, x in enumerate(nums):
+            b = x // w
+            if b in bucket:
+                return True
+            if b - 1 in bucket and abs(x - bucket[b - 1]) < w:
+                return True
+            if b + 1 in bucket and abs(x - bucket[b + 1]) < w:
+                return True
+            bucket[b] = x
+            if i >= indexDiff:
+                old_bucket = nums[i - indexDiff] // w
+                del bucket[old_bucket]
+        return False        
